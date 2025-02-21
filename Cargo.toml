@@ -7,3 +7,6 @@ edition = "2024"
 color-eyre = "0.6.3"
 sqlx = { version = "0.8.3", features = ["postgres", "runtime-tokio"] }
 tokio = { version = "1.43.0", features = ["full"] }
+
+[dev-dependencies]
+serial_test = "2"
