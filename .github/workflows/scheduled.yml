@@ -8,9 +8,6 @@ on:
     - cron:  '7 7 * * *'
 env:
   DATABASE_URL: "postgres://postgres:postgres@localhost:5432/postgres"
-concurrency:
-  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
-  cancel-in-progress: true
 name: rolling
 jobs:
   nightly:

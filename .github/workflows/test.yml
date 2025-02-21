@@ -6,9 +6,6 @@ on:
   pull_request:
 env:
   DATABASE_URL: "postgres://postgres:postgres@localhost:5432/postgres"
-concurrency:
-  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
-  cancel-in-progress: true
 name: test
 jobs:
   required:
