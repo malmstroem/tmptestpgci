@@ -5,11 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## v0.1.2 (2025-02-21)
+## v0.1.3 (2025-02-21)
 
-### Documentation
+### Test
 
- - <csr-id-3dcb9a649aa22347988f8fef06fc00d685fbb814/> added changelog
+ - <csr-id-fba6eb451129d1c2056f6a3751fcebe16af91816/> removed the semver tests
 
 ### Commit Statistics
 
@@ -26,6 +26,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <details><summary>view details</summary>
 
  * **Uncategorized**
+    - Removed the semver tests ([`fba6eb4`](https://github.com/malmstroem/tmptestpgci/commit/fba6eb451129d1c2056f6a3751fcebe16af91816))
+</details>
+
+## v0.1.2 (2025-02-21)
+
+### Documentation
+
+ - <csr-id-3dcb9a649aa22347988f8fef06fc00d685fbb814/> added changelog
+
+### Commit Statistics
+
+<csr-read-only-do-not-edit/>
+
+ - 2 commits contributed to the release.
+ - 1 commit was understood as [conventional](https://www.conventionalcommits.org).
+ - 0 issues like '(#ID)' were seen in commit messages
+
+### Commit Details
+
+<csr-read-only-do-not-edit/>
+
+<details><summary>view details</summary>
+
+ * **Uncategorized**
+    - Bump tmptestpgci v0.1.2 ([`da85ff0`](https://github.com/malmstroem/tmptestpgci/commit/da85ff03094276d6a52e6b9b7796b280a8b8de54))
     - Added changelog ([`3dcb9a6`](https://github.com/malmstroem/tmptestpgci/commit/3dcb9a649aa22347988f8fef06fc00d685fbb814))
 </details>
 
