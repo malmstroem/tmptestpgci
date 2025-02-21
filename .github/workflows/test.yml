@@ -12,6 +12,22 @@ jobs:
   required:
     runs-on: ubuntu-latest
     name: ubuntu / ${{ matrix.toolchain }}
+    services:
+      postgres:
+        image: postgres
+
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_DB: postgres
+
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
     strategy:
       matrix:
         toolchain: [stable, beta]
@@ -28,11 +44,31 @@ jobs:
         run: cargo generate-lockfile
       - name: cargo test --locked
         run: cargo test --locked --all-features --all-targets
+        env:
+          DATABASE_URL: "postgres://postgres:postgres@localhost:5432/postgres"
       - name: cargo test --doc
         run: cargo test --locked --all-features --doc
+        env:
+          DATABASE_URL: "postgres://postgres:postgres@localhost:5432/postgres"
   minimal:
     runs-on: ubuntu-latest
     name: ubuntu / stable / minimal-versions
+    services:
+      postgres:
+        image: postgres
+
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_DB: postgres
+
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
     steps:
       - uses: actions/checkout@v4
         with:
@@ -47,9 +83,27 @@ jobs:
         run: cargo +nightly update -Zminimal-versions
       - name: cargo test
         run: cargo test --locked --all-features --all-targets
+        env:
+          DATABASE_URL: "postgres://postgres:postgres@localhost:5432/postgres"
   os-check:
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.os }} / stable
+    services:
+      postgres:
+        image: postgres
+
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_DB: postgres
+
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
     strategy:
       fail-fast: false
       matrix:
@@ -65,3 +119,5 @@ jobs:
         run: cargo generate-lockfile
       - name: cargo test
         run: cargo test --locked --all-features --all-targets
+        env:
+          DATABASE_URL: "postgres://postgres:postgres@localhost:5432/postgres"
