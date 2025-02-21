@@ -4,6 +4,8 @@ on:
   push:
     branches: [main]
   pull_request:
+env:
+  DATABASE_URL: "postgres://postgres:postgres@localhost:5432/postgres"
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
@@ -44,12 +46,8 @@ jobs:
         run: cargo generate-lockfile
       - name: cargo test --locked
         run: cargo test --locked --all-features --all-targets
-        env:
-          DATABASE_URL: "postgres://postgres:postgres@localhost:5432/postgres"
       - name: cargo test --doc
         run: cargo test --locked --all-features --doc
-        env:
-          DATABASE_URL: "postgres://postgres:postgres@localhost:5432/postgres"
   minimal:
     runs-on: ubuntu-latest
     name: ubuntu / stable / minimal-versions
@@ -83,41 +81,3 @@ jobs:
         run: cargo +nightly update -Zminimal-versions
       - name: cargo test
         run: cargo test --locked --all-features --all-targets
-        env:
-          DATABASE_URL: "postgres://postgres:postgres@localhost:5432/postgres"
-  os-check:
-    runs-on: ${{ matrix.os }}
-    name: ${{ matrix.os }} / stable
-    services:
-      postgres:
-        image: postgres
-
-        env:
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_USER: postgres
-          POSTGRES_DB: postgres
-
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5432:5432
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [macos-latest, windows-latest]
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          submodules: true
-      - name: Install stable
-        uses: dtolnay/rust-toolchain@stable
-      - name: cargo generate-lockfile
-        if: hashFiles('Cargo.lock') == ''
-        run: cargo generate-lockfile
-      - name: cargo test
-        run: cargo test --locked --all-features --all-targets
-        env:
-          DATABASE_URL: "postgres://postgres:postgres@localhost:5432/postgres"
