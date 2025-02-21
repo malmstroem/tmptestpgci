@@ -1,5 +1,7 @@
+use tmptestpgci;
 fn main() {
     println!("Hello, world!");
+    let _ = tmptestpgci::add(4, 5);
 }
 
 #[cfg(test)]
