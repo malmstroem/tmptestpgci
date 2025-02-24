@@ -4,8 +4,6 @@ on:
   push:
     branches: [main]
   pull_request:
-env:
-  SQLX_OFFLINE: true
 name: check
 jobs:
   fmt:
@@ -15,6 +13,10 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: true
+      - name: Run SQLx Migrations
+        run: |
+          cargo install sqlx-cli
+          sqlx migrate run
       - name: Install stable
         uses: dtolnay/rust-toolchain@stable
         with:
@@ -35,6 +37,10 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: true
+      - name: Run SQLx Migrations
+        run: |
+          cargo install sqlx-cli
+          sqlx migrate run
       - name: Install ${{ matrix.toolchain }}
         uses: dtolnay/rust-toolchain@master
         with:
@@ -52,6 +58,10 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: true
+      - name: Run SQLx Migrations
+        run: |
+          cargo install sqlx-cli
+          sqlx migrate run
       - name: Install nightly
         uses: dtolnay/rust-toolchain@nightly
       - name: Install cargo-docs-rs
