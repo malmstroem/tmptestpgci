@@ -53,6 +53,14 @@ pub async fn query_db(pool: &Pool<Postgres>) -> Result<(), Report> {
 mod tests {
     use super::*;
 
+    #[tokio::test]
+    async fn test_in_module() {
+        let pool = connect().await.unwrap();
+        init_db(&pool).await.unwrap();
+        populate_db(&pool).await.unwrap();
+        query_db(&pool).await.unwrap();
+    }
+
     #[test]
     fn it_works() {
         let result = add(2, 2);
