@@ -16,17 +16,7 @@ pub async fn connect() -> Result<Pool<Postgres>, Report> {
 }
 
 pub async fn init_db(pool: &Pool<Postgres>) -> Result<(), Report> {
-    sqlx::query!(
-        r#"
-        CREATE TABLE IF NOT EXISTS datatable (
-            id SERIAL PRIMARY KEY,
-            name TEXT NOT NULL,
-            age INTEGER NOT NULL
-        );
-        "#
-    )
-    .execute(pool)
-    .await?;
+    sqlx::migrate!().run(pool).await?;
     Ok(())
 }
 
